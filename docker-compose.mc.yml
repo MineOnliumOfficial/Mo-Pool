@@ -1,0 +1,60 @@
+services:
+  
+# Postgresql DB 
+  mcdb:
+    image: postgres:14
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "miningcore", "-U", "miningcore" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+        POSTGRES_PASSWORD: 'password'
+        POSTGRES_USER: 'miningcore'
+        POSTGRES_HOST_AUTH_METHOD: 'trust'
+        POSTGRES_DATABASE: miningcore
+    ports:
+      - 5432
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+
+# Mining Core
+  miningcore:
+    image: tmjeff/miningcoremineonlium
+    restart: always
+    depends_on:
+      mcdb:
+        condition: service_healthy
+    ports:
+      - 4000:4000
+      - 4001:4001
+      - 4066:4066
+      - 4067:4067
+      - 4073:4073
+    volumes:
+      - ./mcconfig.json:/app/config.json
+      - dag:/home/dag
+
+# Payment bot
+  paymeplease:
+    image: tmjeff/pfw
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - .env:/app/.env
+
+## STrict orgin issues(cors). need to re-wrap image.
+# Mining Core Frontend
+  miningcore-frontend:
+    build:
+      context: ./Miningcore.UI-master/be
+      dockerfile: Dockerfile
+    image: mcuic
+    restart: always
+    ports:
+      - 3000:8080
+
+volumes:
+   dag:
