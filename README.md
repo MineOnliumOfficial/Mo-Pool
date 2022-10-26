@@ -8,8 +8,8 @@ Deploy a MineOnlium pool in a few simple steps :)
 ## System Requirements
 * Fast (150+mbs) and stable internet connection 
 * SSD (recomended)
-* >= 8gb memory (If you take the block explorer out you might be able to get down to 4gb)
-* >= 4cpu ( Once again if you strip some services out you can probably cut this back)
+* memory >= 8gb  (If you take the block explorer out you might be able to get down to 4gb)
+* cpu >= 4 ( Once again if you strip some services out you can probably cut this back)
 
 
 ## Services Rendered:
