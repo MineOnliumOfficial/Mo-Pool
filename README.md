@@ -45,4 +45,21 @@ Deploy the MineOnlium stack in two commands :)
 1. Стратум вашего майнинг пула в локальной сети будет – локальный ip:4073
 Готово!
 
+## Chineese / zh-CHT
+
+1. 如果你是在windows上，请安装WSL2
+https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-10
+#overview。Linux和OSX不需要这个。
+2. Docker（或docker桌面，如果你有GUI的话） - https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script
+3. 下载https://github.com/MineOnliumOfficial/Mo-Pool/archive/refs/heads/main.zip 
+3-1.解压 repo
+3-2.进入repo的文件夹
+3-3. 编辑.env（这个文件是隐藏的，搜索如何查看系统中的隐藏文件）。
+3-4.编辑Miningcore.js（位于MO-Stack/Miningcore.UI-master/be/cmd/be/kodata/js/miningcore.js)
+3-5.你移动到浏览器的地址栏（当你在版本库文件夹中时），输入 "cmd" - 输入命令 "Docker compose up -d"
+3-6. 在这里了解如何监控和查看运行中的容器的日志-->https://docs.docker.com/engine/reference/commandline/container_ls/
+3-7. 节点达到同步后。输入命令 "docker compose -f docker-compose.mc.yml up -d "来调出Miningcore栈。
+3-8.然后你也打开另一个终端，输入命令 "docker compose -f docker-compose.bs.yml up -d "来调出Block Explorer。
+现在你需要在Ubuntu中打开4073和60606端口。要做到这一点，通过启动打开Ubuntu终端，输入命令 "sudo ufw allow 4073" 和 "sudo ufw allow 60606"
+
 ( dont forget to open port 60606 for p2p networking :) ) 
