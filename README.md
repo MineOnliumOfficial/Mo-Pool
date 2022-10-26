@@ -21,11 +21,11 @@ Deploy the MineOnlium stack in two commands :)
 1. go to the repository folder
 1. edit .env (this file is hidden, search for how to view hidden files in your system)
 1. edit miningcore.js ( located at `MO-Stack/Miningcore.UI-master/be/cmd/be/kodata/js/miningcore.js`)
-1.you move to the address bar of the browser (while you are in the repository folder) and enter "cmd" - enter the command "Docker compose up -d"
+1.you move to the address bar of the browser (while you are in the repository folder) and enter "cmd" - enter the command `Docker compose up -d`
 1. Learn how to monitor and view logs of the running containers here -> https://docs.docker.com/engine/reference/commandline/container_ls/
-1. After the node has reached synchronization. Enter the command "docker compose -f docker-compose.mc.yml up -d" to bring up the Miningcore stack. 
-1. then you also open another terminal and enter the command "docker compose -f docker-compose.bs.yml up -d" to bring up the Block Explorer.
-1. now you need to open port 4073 and 60606 in Ubuntu. to do this, open the Ubuntu terminal via start. enter the command "sudo ufw allow 4073" and  "sudo ufw allow 60606"
+1. After the node has reached synchronization. Enter the command `docker compose -f docker-compose.mc.yml up -d` to bring up the Miningcore stack. 
+1. Then you also open another terminal and enter the command `docker compose -f docker-compose.bs.yml up -d` to bring up the Block Explorer.
+1. Open port 4073 and 60606 in Ubuntu. to do this, open the Ubuntu terminal via start. enter the command "sudo ufw allow 4073" and  "sudo ufw allow 60606"
 
 ## Russian / RU
 
