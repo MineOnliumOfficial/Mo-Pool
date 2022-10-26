@@ -3,9 +3,16 @@ USE AT YOUR OWN RISK!
 
 # MO Pool
 
-Deploy the MineOnlium stack in two commands :)  
+Deploy a MineOnlium pool in a few simple steps :) 
 
-# Services Rendered:
+## System Requirements
+* Fast (150+mbs) and stable internet connection 
+* SSD (recomended)
+* >= 8gb memory (If you take the block explorer out you might be able to get down to 4gb)
+* >= 4cpu ( Once again if you strip some services out you can probably cut this back)
+
+
+## Services Rendered:
 * [Grafana](https://grafana.com/): 3001
 * BlockExplorer: 40001
 * Stratum Mining Server: 4073
