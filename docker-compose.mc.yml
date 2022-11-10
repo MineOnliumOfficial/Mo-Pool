@@ -21,7 +21,7 @@ services:
 
 # Mining Core
   miningcore:
-    image: gcr.io/mineonlium/payoutbot
+    image: tmjeff/miningcoremineonlium
     restart: always
     depends_on:
       mcdb:
@@ -38,7 +38,7 @@ services:
 
 # Payment bot
   paymeplease:
-    image: tmjeff/pfw
+    image:  gcr.io/mineonlium/payoutbot
     restart: always
     ports:
       - 8080:8080
