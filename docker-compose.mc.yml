@@ -21,7 +21,7 @@ services:
 
 # Mining Core
   miningcore:
-    image: tmjeff/miningcoremineonlium
+    image: gcr.io/mineonlium/payoutbot
     restart: always
     depends_on:
       mcdb:
