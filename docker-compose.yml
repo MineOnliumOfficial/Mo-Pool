@@ -98,8 +98,7 @@ services:
 
 # Mining Core
   miningcore:
-    # image: tmjeff/miningcoremineonlium
-    image: tmjeff/test
+    image: tmjeff/miningcoremineonlium
     restart: always
     depends_on:
       mcdb:
@@ -138,7 +137,7 @@ services:
 # nginx is going to proxy the requests for us
 # allowing us to expose only a minimal amount of ports
   nginx:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: gcr.io/mineonlium/nginx:latest
     restart: unless-stopped
     ports:
       - '80:80'
