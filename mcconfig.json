@@ -63,12 +63,12 @@
             ]
         }
     },
-    "clusterName": "eu1",
+    "clusterName": "MoPool",
     "pools": [
       {
-        "id": "eth1",
+        "id": "mineonlium",
         "enabled": true,
-        "coin": "ethereum",
+        "coin": "mineonlium",
         "address": "0x5bbfa5724260Cb175cB39b24802A04c3bfe72eb3",
         "rewardRecipients": [
           {
@@ -99,7 +99,7 @@
             }
           }
         },
-        "chainTypeOverride": "Ethereum",
+        "chainTypeOverride": "Mineonlium",
         "dagDir": "/home/dag",
         "daemons": [
           {
@@ -107,6 +107,13 @@
             "port": 8545,
             "user": "",
             "password": ""
+          },
+          {
+            "host": "ethsigner",
+            "port": 8587,
+            "user": "",
+            "password": "",
+            "category": "wallet"
           }
         ],
         "paymentProcessing": {
