@@ -1,6 +1,6 @@
 // config
-var API = 'http://miningcore:4000/api/'; // Change this in your public API address
-var defaultPool = 'eth1'; // Default Pool ID
+var API = 'http://0.0.0.0:4000/api/'; // Change this in your public API address
+var defaultPool = 'mineonlium'; // Default Pool ID
 
 var currentPool = defaultPool;
 
