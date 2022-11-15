@@ -129,8 +129,8 @@ services:
     ]
     volumes:
     # Dont forget to run the KeyGen tool to generate the keys :) 
-      - ./ethsigner/keygen/wallet/keyFile:/var/config/keyFile
-      - ./ethsigner/passwords.txt:/var/config/passwords.txt
+      - ./ethsigner/keygen/wallet/keyFile:/opt/ethsigner/conf/keyFile
+      - ./ethsigner/passwords.txt:/opt/ethsigner/conf/passwordFile
     ports:
       - "8545"
       - "9546"
