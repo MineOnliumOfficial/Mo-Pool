@@ -123,8 +123,8 @@ services:
       - ./ethsigner/passwords.txt:/var/config/passwords.txt
       - ./ethsigner/config.toml:/var/config/config.toml
     ports:
-      - "8545:8545"
-      - "9546:9546"
+      - "8545"
+      - "9546"
 
 ## Strict orgin issues(cors). need to re-wrap image.
 # Mining Core Frontend
