@@ -116,7 +116,7 @@ services:
 # ethsigner is to replace Payment bot
   ethsigner:
     image: consensys/ethsigner:22.1
-    command: --config-file=/var/config/config.toml multikey-signer
+    command: --config-file=/var/config/config.toml 
     volumes:
     # Dont forget to run the KeyGen tool to generate the keys :) 
       - ./ethsigner/keygen/wallets:/var/config

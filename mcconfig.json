@@ -110,7 +110,7 @@
           },
           {
             "host": "ethsigner",
-            "port": 8587,
+            "port": 8545,
             "user": "",
             "password": "",
             "category": "wallet"
