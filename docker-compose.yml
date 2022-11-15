@@ -116,12 +116,21 @@ services:
 # ethsigner is to replace Payment bot
   ethsigner:
     image: consensys/ethsigner:22.1
-    command: --config-file=/var/config/config.toml 
+    # command: --config-file=/var/config/config.toml 
+    command: [
+      "--chain-id=54321",
+      "--downstream-http-host=mineonlium",
+      "--downstream-http-port=8545",
+      "--http-listen-host=0.0.0.0",
+      "--http-listen-port=8545",
+      "file-based-signer",
+      "--key-file=/opt/ethsigner/conf/keyFile",
+      "--password-file=/opt/ethsigner/conf/passwordFile"
+    ]
     volumes:
     # Dont forget to run the KeyGen tool to generate the keys :) 
-      - ./ethsigner/keygen/wallets:/var/config
+      - ./ethsigner/keygen/wallet/keyFile:/var/config/keyFile
       - ./ethsigner/passwords.txt:/var/config/passwords.txt
-      - ./ethsigner/config.toml:/var/config/config.toml
     ports:
       - "8545"
       - "9546"

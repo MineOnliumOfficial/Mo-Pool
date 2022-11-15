@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("Enter the password to encrypt the account")
 	var password string
 	fmt.Scanln(&password)
-	ks := keystore.NewKeyStore("./wallets", keystore.StandardScryptN, keystore.StandardScryptP)
+	ks := keystore.NewKeyStore("./wallet", keystore.StandardScryptN, keystore.StandardScryptP)
 	account, err := ks.NewAccount(password)
 	if err != nil {
 		log.Fatal(err)
