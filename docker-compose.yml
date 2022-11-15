@@ -30,11 +30,11 @@ services:
       # - --metrics-push-host=push-gateway
     image: hyperledger/besu:latest
     ports:
-      - 8545
-      - 8546
+      - 8545:8545
+      - 8546:8546
       - 8547
       - 60606:60606
-      - 50001
+      - 50001:50001
     volumes:
       # -  modata:/opt/besu/database
       - ./genesis:/opt/besu/genesis
@@ -92,7 +92,7 @@ services:
         POSTGRES_HOST_AUTH_METHOD: 'trust'
         POSTGRES_DATABASE: miningcore
     ports:
-      - 5432
+      - 5432:5432
     volumes:
       - ./db:/docker-entrypoint-initdb.d/
 
@@ -104,11 +104,11 @@ services:
       mcdb:
         condition: service_healthy
     ports:
-      - 4000
-      - 4001
+      - 4000:4000
+      - 4001:4001
       - 4066
       - 4067
-      - 4073
+      - 4073:4073
     volumes:
       - ./mcconfig.json:/app/config.json
       - dag:/home/dag
@@ -143,7 +143,7 @@ services:
     image: mcuic
     restart: always
     ports:
-      - 8080
+      - 3000:8080
 
 # nginx is going to proxy the requests for us
 # allowing us to expose only a minimal amount of ports
