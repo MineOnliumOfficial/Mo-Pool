@@ -1,5 +1,5 @@
 // config
-var API = 'http://35.188.100.180:4000/api/'; // Change this in your public API address
+var API = 'http://miningcore:4000/api/'; // Change this in your public API address
 var defaultPool = 'eth1'; // Default Pool ID
 
 var currentPool = defaultPool;
