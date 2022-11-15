@@ -36,7 +36,6 @@ services:
       - 60606:60606
       - 50001:50001
     volumes:
-      -  modata:/opt/besu/database
       - ./genesis:/opt/besu/genesis
 
 # Observiblity 
@@ -174,6 +173,5 @@ services:
   #     - 8088:8088
 
 volumes:
-   modata: 
    dag: 
    nginx-data:
