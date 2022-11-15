@@ -121,6 +121,7 @@ services:
     # Dont forget to run the KeyGen tool to generate the keys :) 
       - ./ethsigner/keygen/wallets:/var/config
       - ./ethsigner/passwords.txt:/var/config/passwords.txt
+      - ./ethsigner/config.toml:/var/config/config.toml
     ports:
       - "8545:8545"
       - "9546:9546"
