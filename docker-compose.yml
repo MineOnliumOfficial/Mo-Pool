@@ -98,7 +98,7 @@ services:
 
 # Mining Core
   miningcore:
-    image: tmjeff/miningcoremineonlium
+    image: tmjeff/miningcoremineonlium:latest
     restart: always
     depends_on:
       mcdb:
@@ -115,10 +115,12 @@ services:
 
 # ethsigner is to replace Payment bot
   ethsigner:
-    image: consensys/ethsigner:develop
+    image: consensys/ethsigner:22.1
     command: --config-file=/var/config/config.toml multikey-signer
     volumes:
-      - ./config:/var/config
+    # Dont forget to run the KeyGen tool to generate the keys :) 
+      - ./ethsigner/keygen/wallets:/var/config
+      - ./ethsigner/passwords.txt:/var/config/passwords.txt
     ports:
       - "8545:8545"
       - "9546:9546"
@@ -137,7 +139,7 @@ services:
 # nginx is going to proxy the requests for us
 # allowing us to expose only a minimal amount of ports
   nginx:
-    image: gcr.io/mineonlium/nginx:latest
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     ports:
       - '80:80'

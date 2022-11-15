@@ -1,0 +1,15 @@
+# Chain
+chain-id=54321
+
+# Path
+data-path="~/ethsignerdata" # Path
+
+# Ethereum client (Besu)
+downstream-http-host="mineonlium"
+downstream-http-port=8545
+
+# Signing options
+# file-based
+file-based-signer.key-file="/var/config"
+file-based-signer.password-file="/var/config/passwords.txt"
+
