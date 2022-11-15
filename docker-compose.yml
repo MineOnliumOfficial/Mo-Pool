@@ -36,7 +36,7 @@ services:
       - 60606:60606
       - 50001:50001
     volumes:
-      # -  modata:/opt/besu/database
+      -  modata:/opt/besu/database
       - ./genesis:/opt/besu/genesis
 
 # Observiblity 
@@ -58,7 +58,7 @@ services:
   push-gateway:
     image: prom/pushgateway
     ports:
-      - 9091
+      - 9091:9091
 
 # Prometheus
   # #TODO:: CONFIGURE
@@ -75,7 +75,7 @@ services:
       - "--web.console.templates=/usr/share/prometheus/consoles"
     restart: unless-stopped
     ports:
-      - 9090
+      - 9090:9090
 
 # Postgresql DB 
   mcdb:

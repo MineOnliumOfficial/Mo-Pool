@@ -11,8 +11,8 @@
     },
     "banning": {
         "manager": "Integrated",
-        "banOnJunkReceive": false,
-        "banOnInvalidShares": false
+        "banOnJunkReceive": true,
+        "banOnInvalidShares": true
     },
     "notifications": {
         "enabled": false,
@@ -41,7 +41,7 @@
     },
     "paymentProcessing": {
         "enabled": true,
-        "interval": 100,
+        "interval": 1000,
         "shareRecoveryFile": "recovered-shares.txt"
     },
     "api": {
