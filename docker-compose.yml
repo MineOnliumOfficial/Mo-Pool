@@ -111,6 +111,7 @@ services:
 # ethsigner is to replace Payment bot
   ethsigner:
     image: consensys/ethsigner:22.1
+    restart: always
     # command: --config-file=/var/config/config.toml 
     command: [
       "--chain-id=54321",
