@@ -1,7 +1,7 @@
 ﻿{
     "$schema": "https://raw.githubusercontent.com/oliverw/miningcore/master/src/Miningcore/config.schema.json",
     "logging": {
-        "level": "info",
+        "level": "error",
         "enableConsoleLog": true,
         "enableConsoleColors": true,
         "logFile": "",
@@ -11,8 +11,8 @@
     },
     "banning": {
         "manager": "Integrated",
-        "banOnJunkReceive": false,
-        "banOnInvalidShares": false
+        "banOnJunkReceive": true,
+        "banOnInvalidShares": true
     },
     "notifications": {
         "enabled": false,
@@ -41,7 +41,7 @@
     },
     "paymentProcessing": {
         "enabled": true,
-        "interval": 100,
+        "interval": 1000,
         "shareRecoveryFile": "recovered-shares.txt"
     },
     "api": {
@@ -63,18 +63,18 @@
             ]
         }
     },
-    "clusterName": "eu1",
+    "clusterName": "MoPool",
     "pools": [
       {
-        "id": "eth1",
+        "id": "mineonlium",
         "enabled": true,
         "coin": "ethereum",
-        "address": "0x5bbfa5724260Cb175cB39b24802A04c3bfe72eb3",
+        "address": "0x72cc2628b4d023e86e2741c2df4a6809fbd61a4f",
         "rewardRecipients": [
           {
             "type": "op",
-            "address": "0x5bbfa5724260Cb175cB39b24802A04c3bfe72eb3",
-            "percentage": 1.0
+            "address": "0x72cc2628b4d023e86e2741c2df4a6809fbd61a4f",
+            "percentage": 0
           }
         ],
         "blockRefreshInterval": 120,
@@ -99,7 +99,7 @@
             }
           }
         },
-        "chainTypeOverride": "Ethereum",
+        "chainTypeOverride": "Mineonlium",
         "dagDir": "/home/dag",
         "daemons": [
           {
@@ -107,6 +107,13 @@
             "port": 8545,
             "user": "",
             "password": ""
+          },
+          {
+            "host": "ethsigner",
+            "port": 8545,
+            "user": "",
+            "password": "",
+            "category": "wallet"
           }
         ],
         "paymentProcessing": {

@@ -1,5 +1,5 @@
-services:
 
+services:
 # mineonlium node
   mineonlium:
     restart: always
@@ -29,54 +29,182 @@ services:
       # - --metrics-push-port=9091 
       # - --metrics-push-host=push-gateway
     image: hyperledger/besu:latest
+    user: root
     ports:
-      - 8545
-      - 8546
+      - 8545:8545
+      - 8546:8546
       - 8547
       - 60606:60606
-      - 50001
+      - 50001:50001
     volumes:
-      # -  modata:/opt/besu/database
       - ./genesis:/opt/besu/genesis
+      - ./data/mineonlium:/opt/besu/database
 
-# Observiblity 
-# Grafana 
-  #TODO:: CONFIGURE
-  grafana:
-    image: grafana/grafana:7.2.1
-    depends_on:
-      - prometheus
-    ports:
-      - 3001:3000
-    volumes:
-      - ./grafana:/etc/grafana/provisioning
-    # env_file:
-    #   - ./grafana/config.monitoring
-    restart: unless-stopped
-
-# Prometheus push gateway
-  push-gateway:
-    image: prom/pushgateway
-    ports:
-      - 9091:9091
-
-# Prometheus
-  # #TODO:: CONFIGURE
-  prometheus:
-    image: prom/prometheus:v2.21.0
-    depends_on:
-      - mineonlium
-    volumes:
-    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  moone:
+    restart: always
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
-      - "--web.console.templates=/usr/share/prometheus/consoles"
+      - --genesis-file=/opt/besu/genesis/genesis.json
+      - --p2p-host=0.0.0.0
+      - --host-allowlist=*
+      - --p2p-port=60606
+      - --bootnodes=enode://186fc7e1dc26686eaef6c9a57f33cc211650bc22b5152072f32593eb39f93ee3eb2c50e5e8d99905cd3021ff595f4c5b43a9d249d596d776649ba01f6dea8584@34.132.68.218:60606
+    image: hyperledger/besu:latest
+    user: root
+    ports:
+      - 60606
+    volumes:
+      - ./genesis:/opt/besu/genesis
+      - ./data/moone:/opt/besu/database
+
+  motwo:
+    restart: always
+    command:
+      - --genesis-file=/opt/besu/genesis/genesis.json
+      - --p2p-host=0.0.0.0
+      - --host-allowlist=*
+      - --p2p-port=60606
+      - --bootnodes=enode://186fc7e1dc26686eaef6c9a57f33cc211650bc22b5152072f32593eb39f93ee3eb2c50e5e8d99905cd3021ff595f4c5b43a9d249d596d776649ba01f6dea8584@34.132.68.218:60606
+    image: hyperledger/besu:latest
+    user: root
+    ports:
+      - 60606
+    volumes:
+      - ./genesis:/opt/besu/genesis
+      - ./data/motwo:/opt/besu/database
+
+# Postgresql DB 
+  mcdb:
+    image: postgres:14
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "miningcore", "-U", "miningcore" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+        POSTGRES_PASSWORD: 'password'
+        POSTGRES_USER: 'miningcore'
+        POSTGRES_HOST_AUTH_METHOD: 'trust'
+        POSTGRES_DATABASE: miningcore
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+
+# Mining Core
+  miningcore:
+    image: tmjeff/miningcoremineonlium:latest
+    restart: always
+    depends_on:
+      mcdb:
+        condition: service_healthy
+    ports:
+      - 4000:4000
+      - 4001:4001
+      - 4066
+      - 4067
+      - 4073:4073
+    volumes:
+      - ./mcconfig.json:/app/config.json
+      - dag:/home/dag
+
+# ethsigner is to replace Payment bot
+  ethsigner:
+    image: consensys/ethsigner:22.1
+    # command: --config-file=/var/config/config.toml 
+    command: [
+      "--chain-id=54321",
+      "--downstream-http-host=mineonlium",
+      "--downstream-http-port=8545",
+      "--http-listen-host=0.0.0.0",
+      "--http-listen-port=8545",
+      "file-based-signer",
+      "--key-file=/opt/ethsigner/conf/keyFile",
+      "--password-file=/opt/ethsigner/conf/passwordFile"
+    ]
+    user: root
+    volumes:
+    # Dont forget to run the KeyGen tool to generate the keys :) 
+      - ./ethsigner/config/:/opt/ethsigner/conf/
+    ports:
+      - "8545"
+      - "9546"
+
+## Strict orgin issues(cors). need to re-wrap image.
+# Mining Core Frontend
+  miningcore-frontend:
+    build:
+      context: ./Miningcore.UI-master/be
+      dockerfile: Dockerfile
+    image: mcuic
+    restart: always
+    ports:
+      - 3000:8080
+
+# nginx is going to proxy the requests for us
+# allowing us to expose only a minimal amount of ports
+  nginx:
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     ports:
-      - 9090:9090
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - nginx-data:/data
+      # - ./letsencrypt:/etc/letsencrypt
+
+# # Observiblity 
+# # Grafana 
+#   #TODO:: CONFIGURE
+#   grafana:
+#     image: grafana/grafana:7.2.1
+#     depends_on:
+#       - prometheus
+#     ports:
+#       - 3001:3000
+#     volumes:
+#       - ./grafana:/etc/grafana/provisioning
+#     # env_file:
+#     #   - ./grafana/config.monitoring
+#     restart: unless-stopped
+
+# # Prometheus push gateway
+#   push-gateway:
+#     image: prom/pushgateway
+#     ports:
+#       - 9091:9091
+
+# # Prometheus
+#   # #TODO:: CONFIGURE
+#   prometheus:
+#     image: prom/prometheus:v2.21.0
+#     depends_on:
+#       - mineonlium
+#     volumes:
+#     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#     command:
+#       - "--config.file=/etc/prometheus/prometheus.yml"
+#       - "--storage.tsdb.path=/prometheus"
+#       - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+#       - "--web.console.templates=/usr/share/prometheus/consoles"
+#     restart: unless-stopped
+#     ports:
+#       - 9090:9090
+#   splunk is an optional instance of Splunk
+#   curl -k https://localhost:8088/services/collector/event -H "Authorization: Splunk 123456789" -d '{"event": "hello world"}'
+  # splunk:
+  #   platform: linux/amd64
+  #   image: ${SPLUNK_IMAGE:-splunk/splunk:latest}
+  #   container_name: splunk-service
+  #   environment:
+  #     - SPLUNK_START_ARGS=--accept-license
+  #     - SPLUNK_HEC_TOKEN=123456789
+  #     - SPLUNK_PASSWORD=admin1234
+  #   ports:
+  #     - 8000:8000
+  #     - 8088:8088
 
 volumes:
-   modata: 
    dag: 
+   nginx-data:

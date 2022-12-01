@@ -1,6 +1,6 @@
 // config
-var API = 'http://35.188.100.180:4000/api/'; // Change this in your public API address
-var defaultPool = 'eth1'; // Default Pool ID
+var API = 'http://192.168.1.18:4000/api/'; // Change this in your public API address
+var defaultPool = 'mineonlium'; // Default Pool ID
 
 var currentPool = defaultPool;
 
