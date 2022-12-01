@@ -68,7 +68,7 @@
       {
         "id": "mineonlium",
         "enabled": true,
-        "coin": "mineonlium",
+        "coin": "ethereum",
         "address": "0x5bbfa5724260Cb175cB39b24802A04c3bfe72eb3",
         "rewardRecipients": [
           {
