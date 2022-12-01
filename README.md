@@ -12,11 +12,30 @@ Deploy a MineOnlium pool in a few simple steps :)
 * cpu >= 4 ( Once again if you strip some services out you can probably cut this back)
 
 
-## Services Rendered:
-* [Grafana](https://grafana.com/): 3001
-* BlockExplorer: 40001
+## Services Rendered
 * Stratum Mining Server: 4073
 * Mining Server Frontend: 3000
 
+## Get Started
 
-( dont forget to open port 60606 for p2p networking :) ) 
+* Clone the repository 
+```cmd
+git clone https://github.com/MineOnliumOfficial/Mo-Pool.git
+```
+
+* Generate a new account
+
+```cmd
+cd Mo-Pool/ethsigner/keygen/
+./keygen
+mv wallet/* ../config/keyFile
+mv passwordFile ../config/passwordFile
+```
+
+* Modify the `.env` file with the public address that was returned by the keygen.
+
+* Modify the `mcconfig.json` file with the same public address.
+
+* From the root of the repository bring the stack up with `docker compose up -d`.
+
+* Open and forward port `60606` for p2p networking 
