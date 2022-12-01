@@ -38,4 +38,6 @@ mv passwordFile ../config/passwordFile
 
 * From the root of the repository bring the stack up with `docker compose up -d`.
 
+* (If you plan to use the frontend) Modify the `Miningcore.UI-master/be/cmd/be/kodata/js/miningcore.js` file to reflect the servers public IP address
+
 * Open and forward port `60606` for p2p networking 
